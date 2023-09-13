@@ -1,28 +1,19 @@
 from flask import Flask, request, jsonify
-import numpy as np
-from sklearn import datasets
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
+from textblob import TextBlob
 
 app = Flask(__name__)
 
-# Load dataset and split into train and test sets
-boston = datasets.load_boston()
-X_train, X_test, y_train, y_test = train_test_split(boston.data, boston.target, test_size=0.2, random_state=42)
-
-# Train a linear regression model
-model = LinearRegression().fit(X_train, y_train)
-
 @app.route('/')
 def index():
-    return "Welcome to the House Price Prediction API! Use /predict endpoint to get price predictions."
+    return "Welcome to the Sentiment Analysis API! Use /analyze endpoint to get sentiment."
 
-@app.route('/predict', methods=['POST'])
-def predict():
+@app.route('/analyze', methods=['POST'])
+def analyze():
     try:
         data = request.json
-        prediction = model.predict(np.array([data['features']]))
-        return jsonify({'prediction': prediction[0]})
+        text = data['text']
+        analysis = TextBlob(text)
+        sentiment = "positive" if analysis.sentiment.polarity > 0 else "negative" if analysis.sentiment.polarity < 0 else "neutral"
+        return jsonify({'sentiment': sentiment, 'polarity': analysis.sentiment.polarity})
     except Exception as e:
         return jsonify({'error': str(e)})
