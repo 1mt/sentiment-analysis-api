@@ -5,14 +5,14 @@
 
 ## Demo
 
-https://build-pipeline-test.vercel.app/
+https://sentiment-analysis-api.vercel.app/
 
 ## How it Works
 
 Using sklearn, analyses sentiment of a given piece of text
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"text": "I love this!"}' https://build-pipeline-test.vercel.app/analyze
+curl -X POST -H "Content-Type: application/json" -d '{"text": "I love this!"}' https://sentiment-analysis-api.vercel.app/analyze
 ```
 
 
