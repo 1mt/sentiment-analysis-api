@@ -1,6 +1,7 @@
 import unittest
-from api import app
+from api.main import app
 from flask_testing import TestCase
+
 
 class AppTest(TestCase):
 
@@ -36,6 +37,7 @@ class AppTest(TestCase):
         self.assertEqual(response.status_code, 200)
         json_response = response.get_json()
         self.assertIn('error', json_response)
+
 
 if __name__ == "__main__":
     unittest.main()
